@@ -63,3 +63,27 @@ protocols:
                 "registeredAt": "2023-10-29T09:30:00Z",
                 "message": "User registration successful."
               }
+  /{id}:
+   uriParameters:
+       id:
+         type: integer
+         required: true
+         description: The ID of the user to retrieve or update
+   delete:
+        description:  Delete an existing user by its ID
+        responses:
+            200:
+               description: Successful operation
+               body:
+                   application/json:
+                       example: {"message":"Successfully deleted user with id = 4"}
+            400:
+               description: Invalid user ID supplied
+               body:
+                   application/json:
+                       example: {"error":"Invalid user ID"}
+            404:
+               description: User not found
+               body:
+                   application/json:
+                       example: {"error":"User not found"}
