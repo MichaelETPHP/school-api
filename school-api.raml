@@ -1,0 +1,64 @@
+#%RAML 1.0
+title: school-api
+version: v1
+baseUri: https://localhost:8081/api/v1
+protocols:
+    - HTTPS
+    - HTTP
+/users:
+  get:
+    description: Get a list of registered users
+    responses:
+      200:
+        description: Successful response
+        body:
+          application/json:
+            example: 
+              [
+                {
+                  "id": 1,
+                  "username": "john_doe",
+                  "email": "john.doe@example.com",
+                  "password": "********",
+                  "registeredAt": "2023-10-29T08:00:00Z"
+                },
+                {
+                  "id": 2,
+                  "username": "jane_smith",
+                  "email": "jane.smith@example.com",
+                  "password": "********",
+                  "registeredAt": "2023-10-29T09:30:00Z"
+                }
+              ]
+  post:
+   description: Create a new user
+   body:
+       application/json:
+        type: object
+        properties:
+          username:
+            type: string
+            required: true
+            example: john_doe
+          email:
+            type: string
+            required: true
+            example: john.doe@example.com
+          password:
+            type: string
+            required: true
+            example: password123
+   responses: 
+    201:
+      description: User created successfully
+      body:
+         application/json:
+           example:
+             {
+                "id": 2,
+                "username": "jane_smith",
+                "email": "jane.smith@example.com",
+                "password": "********",
+                "registeredAt": "2023-10-29T09:30:00Z",
+                "message": "User registration successful."
+              }
