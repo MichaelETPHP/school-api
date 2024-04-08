@@ -6,6 +6,36 @@ baseUri: https://localhost:8081/api/v1
 protocols:
     - HTTPS
     - HTTP
+# Add a new data type for Basic Authentication credentials
+types:
+  BasicAuth:
+    type: object
+    properties:
+      username:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+# securitySchemes.raml
+securitySchemes:
+  basic_auth:
+    type: Basic Authentication
+    describedBy:
+      headers:
+        Authorization: 
+          type: string
+          required: true
+          example: Basic {base64(username:password)}
+      responses:
+            401:
+                body:
+                    application/json:
+                        examples:
+                            {
+                            "Msg": "Unauthorized"
+                            }
+                  
 /users:
   get:
     description: Get a list of registered users
@@ -70,6 +100,7 @@ protocols:
          required: true
          description: The ID of the user to retrieve or update
    delete:
+        securedBy: [basic_auth]
         description:  Delete an existing user by its ID
         responses:
             200:
